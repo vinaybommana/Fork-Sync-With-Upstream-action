@@ -26,6 +26,8 @@ push_new_commits() {
 push_new_branch_commits() {
     write_out -1 'Pushing synced data to created branch.'
 
+    git checkout upstream-changes-`date +"%Y_%m_%d"`
+
     # TODO: figure out how this would work in local mode...
     # update origin url with token since it is not persisted during checkout step when syncing from a private repo
     if [ -n "${INPUT_UPSTREAM_REPO_ACCESS_TOKEN}" ]; then
