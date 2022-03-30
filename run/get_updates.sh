@@ -106,6 +106,8 @@ add_branch_with_new_commits() {
         git checkout -b upstream-changes-`date +"%Y_%m_%d"`
         git pull --no-edit ${INPUT_UPSTREAM_PULL_ARGS} upstream "${INPUT_UPSTREAM_SYNC_BRANCH}"
         git push -u origin upstream-changes-`date +"%Y_%m_%d"`
+
+        git checkout master
     fi
 
     COMMAND_STATUS=$?
