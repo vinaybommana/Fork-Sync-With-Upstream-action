@@ -97,8 +97,8 @@ add_branch_with_new_commits() {
     write_out -1 '\nSyncing new commits...'
 
     if [ "${UNSHALLOW}" = true ]; then
-        git checkout -b upstream-changes-`date +"%Y_%m_%d"`
         git repack -d upstream "${INPUT_UPSTREAM_SYNC_BRANCH}"
+        git checkout -b upstream-changes-`date +"%Y_%m_%d"`
         git pull --unshallow --no-edit ${INPUT_UPSTREAM_PULL_ARGS} upstream "${INPUT_UPSTREAM_SYNC_BRANCH}"
     else
         # pull_args examples: "--ff-only", "--tags", "--ff-only --tags"
