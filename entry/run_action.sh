@@ -24,9 +24,9 @@ output_new_commit_list
 add_branch_with_new_commits
 
 # push newly synced commits to local branch
-. "${ACTION_PARENT_DIR}"/run/push_updates.sh
+# . "${ACTION_PARENT_DIR}"/run/push_updates.sh
 # push_new_commits
-push_new_branch_commits
+# push_new_branch_commits
 
 # git config cleanup for workflow continuation
 # function from config_git.sh
