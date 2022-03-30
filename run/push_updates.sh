@@ -21,3 +21,25 @@ push_new_commits() {
     
     write_out "g" 'SUCCESS\n'
 }
+
+# push new branch to remote
+push_new_branch_commits() {
+    write_out -1 'Pushing synced data to created branch.'
+
+    # TODO: figure out how this would work in local mode...
+    # update origin url with token since it is not persisted during checkout step when syncing from a private repo
+    if [ -n "${INPUT_UPSTREAM_REPO_ACCESS_TOKEN}" ]; then
+        git remote set-url origin "https://${GITHUB_ACTOR}:${INPUT_TARGET_REPO_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+    fi
+
+    # shellcheck disable=SC2086
+    git push -u ${INPUT_TARGET_PUSH_ARGS} origin upstream-changes-`date +"%Y_%m_%d"`
+    COMMAND_STATUS=$?
+
+    if [ "${COMMAND_STATUS}" != 0 ]; then
+        # exit on push to target repo fail
+        write_out "${COMMAND_STATUS}" "Could not push changes to target repo."
+    fi
+    
+    write_out "g" 'SUCCESS\n'
+}

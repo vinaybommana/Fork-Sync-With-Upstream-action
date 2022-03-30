@@ -20,11 +20,13 @@ set_upstream
 check_for_updates
 find_last_synced_commit
 output_new_commit_list
-sync_new_commits
+# sync_new_commits
+add_branch_with_new_commits
 
 # push newly synced commits to local branch
 . "${ACTION_PARENT_DIR}"/run/push_updates.sh
-push_new_commits
+# push_new_commits
+push_new_branch_commits
 
 # git config cleanup for workflow continuation
 # function from config_git.sh

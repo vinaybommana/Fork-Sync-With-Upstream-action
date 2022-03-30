@@ -91,3 +91,26 @@ sync_new_commits() {
 
     write_out "g" 'SUCCESS\n'
 }
+
+# create new branch and add new commits to it
+add_branch_with_new_commits() {
+    write_out -1 '\nSyncing new commits...'
+
+    if [ "${UNSHALLOW}" = true ]; then
+        git checkout -b upstream-changes-`date +"%Y_%m_%d"`
+        git repack -d upstream "${INPUT_UPSTREAM_SYNC_BRANCH}"
+        git pull --unshallow --no-edit ${INPUT_UPSTREAM_PULL_ARGS} upstream "${INPUT_UPSTREAM_SYNC_BRANCH}"
+    else
+        # pull_args examples: "--ff-only", "--tags", "--ff-only --tags"
+        git pull --no-edit ${INPUT_UPSTREAM_PULL_ARGS} upstream "${INPUT_UPSTREAM_SYNC_BRANCH}"
+    fi
+
+    COMMAND_STATUS=$?
+
+    if [ "${COMMAND_STATUS}" != 0 ]; then
+        # exit on commit pull fail
+        write_out "${COMMAND_STATUS}" "New commits could not be pulled."
+    fi
+
+    write_out "g" 'SUCCESS\n'
+}
