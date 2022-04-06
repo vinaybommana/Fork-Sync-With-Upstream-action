@@ -103,7 +103,8 @@ add_branch_with_new_commits() {
         git push -u origin upstream-changes
     else
         # pull_args examples: "--ff-only", "--tags", "--ff-only --tags"
-        git checkout -b upstream-changes
+        git push --delete origin upstream-changes # delete branch if exists
+        git checkout -b upstream-changes # create a new branch
         git pull --no-edit ${INPUT_UPSTREAM_PULL_ARGS} upstream "${INPUT_UPSTREAM_SYNC_BRANCH}"
         git push -u origin upstream-changes
 
